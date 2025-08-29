@@ -1,13 +1,17 @@
 // pretty much undiscord, stole the delay amounts and tweaked them from it
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+const deletedelayms = 750;
+const batchdelayms = 7000;
+const maxfetchlimit = 100;
+
 module.exports = {
     name: 'purge',
     async execute(message, args, client) {
         const amount = parseInt(args[0]);
         
         
-        await message.edit('Purging..');
+        await message.edit('Purging...');
         
         let deletedcount = 0;
         let failedcount = 0;
@@ -15,7 +19,7 @@ module.exports = {
         let remaining = amount;
         
         while (remaining > 0) {
-            const fetchlimit = Math.min(remaining, 100);
+            const fetchlimit = Math.min(remaining, maxfetchlimit);
             
             try {
                 const messages = await message.channel.messages.fetch({
@@ -36,7 +40,7 @@ module.exports = {
                     try {
                         await msg.delete();
                         deletedcount++;
-                        await delay(750);
+                        await delay(deletedelayms);
                     } catch (error) {
                         console.log(`Failed to delete message: ${error.message}`);
                         failedcount++;
@@ -49,8 +53,8 @@ module.exports = {
                 lastmessageid = messages.last().id;
                 
                 if (remaining > 0) {
-                    await delay(7000); // allows for sending messages and DOESNT rate limit you as easily
-                    console.log('Waiting before next search')
+                    await delay(batchdelayms); // allows for sending messages and DOESNT rate limit you as easily
+                    console.log('Waiting before next search.');
                 }
                 
             } catch (error) {
