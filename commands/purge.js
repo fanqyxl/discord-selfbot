@@ -1,8 +1,8 @@
 // pretty much undiscord, stole the delay amounts and tweaked them from it
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const deletedelayms = 750;
-const batchdelayms = 7000;
+const deletedelayms = 650;
+const batchdelayms = 2000;
 const maxfetchlimit = 100;
 
 module.exports = {
