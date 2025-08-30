@@ -1,4 +1,4 @@
-const spamdelayms = 250;
+const spamdelayms = 400;
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -34,7 +34,7 @@ module.exports = {
 				await delay(spamdelayms);
 			}
 
-			await message.edit(`Spammed ${amount} messages.`);
+			await message.reply(`Spammed ${amount} messages.`);
 		} catch (err) {
 			console.error('Failed to spam messages:', err);
 			await message.edit('Failed to spam messages.');
